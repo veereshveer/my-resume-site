@@ -1,0 +1,21 @@
+# .gitlab-ci.yml
+# GitLab CI config for deploying a Vite (React) project to GitLab Pages
+
+image: node:20
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+pages:
+  stage: deploy
+  script:
+    - npm ci
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main   # or "master", depending on your branch
